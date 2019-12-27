@@ -79,7 +79,8 @@ def detect(image):
 
     # Detect blobs.
     keypoints = detector.detect(im)
-    print("keypoints: ", len(keypoints))
+    dots = len(keypoints)
+    print("keypoints: ", dots)
 
     # Draw detected blobs as red circles.
     # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
@@ -87,9 +88,23 @@ def detect(image):
 
     im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+    # Write number of blobs to image
+    position = (10,50)
+    cv2.putText(
+        im_with_keypoints, #numpy array on which text is written
+        str(dots), #text
+        position, #position at which writing has to start
+        cv2.FONT_HERSHEY_COMPLEX, #font family
+        1, #font size
+        (0, 0, 255), #font color
+        3) #font stroke
+    #cv2.imwrite('Keypoints', im_with_keypoints)
+
     # Show blobs
     cv2.imshow("Keypoints", im_with_keypoints)
     cv2.waitKey(0)
+
+    
 
 mypath='img/'
 onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
