@@ -30,7 +30,7 @@ def detect(image):
     """
     #add blur to grayscale >> img2
     #print("2")
-    img2 = cv2.medianBlur(img1, 15)
+    img2 = cv2.medianBlur(img1, 19)
     """
     cv2.namedWindow('blur', cv2.WINDOW_AUTOSIZE)
     cv2.imshow('blur', img2)
@@ -41,7 +41,7 @@ def detect(image):
     #binary threshold to filter noise >> img3
     #print("1")
     ret, img3 = cv2.threshold(img2, 100, 255, 0)
-    
+    #img3 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 63, 5) 
     cv2.namedWindow('bin_thresh', cv2.WINDOW_AUTOSIZE)
     cv2.imshow('bin_thresh', img3)
 
@@ -63,7 +63,7 @@ def detect(image):
 
     # Filter by Circularity
     params.filterByCircularity = True
-    params.minCircularity = 0.1
+    params.minCircularity = 0.2
 
     # Filter by Convexity
     params.filterByConvexity = True
@@ -74,11 +74,12 @@ def detect(image):
     params.minInertiaRatio = 0.01
 
     # Create a detector with the parameters
-    ver = (cv2.__version__).split('.')
-    if int(ver[0]) < 3 :
-        detector = cv2.SimpleBlobDetector(params)
-    else : 
-        detector = cv2.SimpleBlobDetector_create(params)
+    # ver = (cv2.__version__).split('.')
+    # if int(ver[0]) < 3 :
+    #     detector = cv2.SimpleBlobDetector(params)
+    # else : 
+    #         detector = cv2.SimpleBlobDetector_create(params)
+    detector = cv2.SimpleBlobDetector_create(params)
 
 
     # Detect blobs.
@@ -131,7 +132,7 @@ def detect(image):
 
         # Filter by Circularity
         params.filterByCircularity = True
-        params.minCircularity = 0.1
+        params.minCircularity = 0.2
 
         # Filter by Convexity
         params.filterByConvexity = True
