@@ -1,6 +1,6 @@
 import cv2
-import sys
-import os
+# import sys
+# import os
 from os import listdir
 from os.path import isfile, join
 import numpy as np
@@ -38,8 +38,6 @@ def detect(image):
     ret, img3 = cv2.threshold(img2, 100, 255, 0)
     # optional: Gaussian adaptive threshold algorythm
     #img3 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 63, 5) 
-    # cv2.namedWindow('bin_thresh', cv2.WINDOW_AUTOSIZE)
-    # cv2.imshow('bin_thresh', img3)
 
     # Read image
     im = img3
@@ -160,9 +158,9 @@ def detect(image):
 
     
 
-mypath='img/'
-onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
-images = np.empty(len(onlyfiles), dtype=object)
+mypath='img/' # subfolder name with image files
+onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ] # list of filenames
+images = np.empty(len(onlyfiles), dtype=object) # list of relative path of files (subfolder + filename)
 for n in range(0, len(onlyfiles)):
   images[n] = detect( join(mypath,onlyfiles[n]) )
 
